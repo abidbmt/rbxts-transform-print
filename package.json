@@ -1,0 +1,33 @@
+{
+  "name": "rbxts-transform-print",
+  "version": "0.0.1",
+  "main": "out/index.js",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "keywords": [],
+  "author": "abidbmt",
+  "license": "MPL-2.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abidbmt/rbxts-transform-print.git"
+  },
+  "devDependencies": {
+    "@types/node": "^22.6.1",
+    "@types/ts-expose-internals": "npm:ts-expose-internals@^5.5.3",
+    "@typescript-eslint/eslint-plugin": "^8.7.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.3"
+  },
+  "files": [
+    "out",
+    "index.d.ts"
+  ]
+}
