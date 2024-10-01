@@ -4,7 +4,7 @@ npm i rbxts-transform-print
 ```
 
 In your `tsconfig.json` add the following:
-```
+```json
 "compilerOptions": {
 	...
 	"plugins": [
