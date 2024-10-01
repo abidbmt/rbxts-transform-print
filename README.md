@@ -2,6 +2,8 @@
 
 A TypeScript AST transformer for [roblox-ts](https://roblox-ts.com/) that enhances debugging by replacing `$print` calls with formatted `print` statements, including file names, line numbers, and configurable log levels.
 
+I want to say that I will only work on this whenever I feel like it or when I need to improve it in any way. Feel free to contribute tho! I will try to cooperate as much as I can.
+
 ## Table of Contents
 
 - [Installation](#installation)
