@@ -59,6 +59,7 @@ The transformer supports the following configuration options:
 
 - **logLevel**: Sets the maximum log level for `$print` statements to be included.
   - `number` (default: `Infinity`): Only `$print` calls with a `logLevel` less than or equal to this value will be emitted.
+  - **NOTE:** Not providing a log level to a `$print` call will force the `$print` call to be emitted!
 
 ## Examples
 
