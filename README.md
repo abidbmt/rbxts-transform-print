@@ -3,7 +3,7 @@
 npm i rbxts-transform-print
 ```
 
-In your `tsconfig.json` add only the `"transform"` entry is required, but you can configure the transformer by including the other entries:
+In your `tsconfig.json` add the following:
 ```
 "compilerOptions": {
 	...
@@ -18,6 +18,7 @@ In your `tsconfig.json` add only the `"transform"` entry is required, but you ca
 	],
 }
 ```
+Only the `"transform"` entry is required, but you can configure the transformer by including the other entries:
 
 ### NOTE: Make sure that this transformer is ran before other transformers!
 
