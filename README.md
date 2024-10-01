@@ -1,5 +1,5 @@
 ### Installation:
-```
+```node
 npm i rbxts-transform-print
 ```
 
@@ -23,13 +23,13 @@ Only the `"transform"` entry is required, but you can configure the transformer 
 ### NOTE: Make sure that this transformer is ran before other transformers!
 
 #### Syntax:
-```
+```ts
 $print()
 ```
-```
+```ts
 $print(message: unknown)
 ```
-```
+```ts
 $print(message: unknown, logLevel: number)
 ```
 
