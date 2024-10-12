@@ -82,7 +82,11 @@ function formatMessage(context: TransformContext, node: ts.CallExpression, mode:
         // console.log("Short fileExtension:", formatedName.replace(".ts", ""))
         // console.log()
 
-        formatedName = formatedName.replace(".ts", "")
+        if (formatedName.endsWith(".ts")) {
+            formatedName = formatedName.replace(".ts", "")
+        } else if (formatedName.endsWith(".tsx")) {
+            formatedName = formatedName.replace(".tsx", "")
+        }
     } else if (context.config.showFileExtension === "off") {
         // Remove the ENTIRE file extension from the file name (main.server.ts -> main, instead of main.server)
         // console.log("No fileExtension:", formatedName.split(".")[0])
