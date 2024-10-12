@@ -34,7 +34,7 @@ export class TransformContext {
 }
 
 // Will format the message based on the config and emit the print call
-function formatMessage(context: TransformContext, node: ts.CallExpression) {
+function formatMessage(context: TransformContext, node: ts.CallExpression, mode: "print" | "warn" | "error") {
 
     // Get the source file of the node
     const sourceFile = node.getSourceFile()
@@ -53,8 +53,16 @@ function formatMessage(context: TransformContext, node: ts.CallExpression) {
 
         formatedName = path.relative(process.cwd(), sourceFile.fileName).replace(/\\/g, "/")
     } else if (context.config.showPath === "short") {
-        // This would do the same as above but only inlude the file name and the parent directory to declutter the output
-        throw new Error("showPath 'short' not implemented!")
+        // This would do the same as above but only inlude the file name and the parent directory to declutter the output (src/server/main.server.ts -> server/main.server.ts)
+        
+        // Get the relative path of the source file to the project directory
+        const relativePath = path.relative(process.cwd(), sourceFile.fileName).replace(/\\/g, "/");
+        // Split the relative path into segments
+        const pathSegments = relativePath.split("/");
+        // Get the last two segments (parent directory and file name)
+        const lastSegments = pathSegments.slice(-2);
+        // Join them back to form the short path
+        formatedName = lastSegments.join("/");
     } else if (context.config.showPath === "off") {
         // This would only include the file name in the output
         // console.log("Actual filename:", path.basename(sourceFile.fileName))
@@ -106,7 +114,7 @@ function formatMessage(context: TransformContext, node: ts.CallExpression) {
 
         // If so, only print the prefix of the output
         return context.factory.createCallExpression(
-            context.factory.createIdentifier("print"),
+            context.factory.createIdentifier(mode),
             undefined,
             [context.factory.createStringLiteral(`[${formatedName}${formatedLine}]`)]
         )
@@ -117,7 +125,7 @@ function formatMessage(context: TransformContext, node: ts.CallExpression) {
 
         // If the CallExpression has a message argument, print the prefix and the message
         return context.factory.createCallExpression(
-            context.factory.createIdentifier("print"),
+            context.factory.createIdentifier(mode),
             undefined,
             [
                 context.factory.createStringLiteral(`[${formatedName}${formatedLine}]`),
@@ -130,7 +138,7 @@ function formatMessage(context: TransformContext, node: ts.CallExpression) {
 function visitCallExpression(context: TransformContext, node: ts.CallExpression): ts.CallExpression | ts.NotEmittedStatement {
 
     // Check if the CallExpression is a $print call
-    if (node.expression.getText() === "$print") {
+    if (node.expression.getText() === "$print" || node.expression.getText() === "$warn") { // Add "|| node.expression.getText() === "$error"" when properly implemented
         // console.log("Is $print call")
 
         // If nothing or only message provided, format and emit the print call immediately
@@ -138,7 +146,16 @@ function visitCallExpression(context: TransformContext, node: ts.CallExpression)
             // console.log("Arguments length <= 1")
             // console.log()
 
-            return formatMessage(context, node)
+            const mode =  
+                node.expression.getText() === "$print" ? "print" :
+                node.expression.getText() === "$warn" ? "warn" :
+                node.expression.getText() === "$error" ? "error" :
+                "print"
+
+            // console.log("Call:", node.expression.getText())
+            // console.log("Mode:", mode)
+
+            return formatMessage(context, node, mode)
         } 
         // If log level provided, check if it should be emitted
         else if (node.arguments.length === 2) {
@@ -160,7 +177,16 @@ function visitCallExpression(context: TransformContext, node: ts.CallExpression)
                 // console.log("print log level is <= to config log level, emitting")
                 // console.log()
 
-                return formatMessage(context, node)
+                const mode =  
+                    node.expression.getText() === "$print" ? "print" :
+                    node.expression.getText() === "$warn" ? "warn" :
+                    node.expression.getText() === "$error" ? "error" :
+                    "print"
+
+                // console.log("Call:", node.expression.getText())
+                // console.log("Mode:", mode)
+
+                return formatMessage(context, node, mode)
             } else {
                 // If not, return a NotEmittedStatement (nothing will be emitted)
                 // console.log("print log level is > to config log level, not emitting")

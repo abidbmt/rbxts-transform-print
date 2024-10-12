@@ -52,7 +52,7 @@ The transformer supports the following configuration options:
 
 - **showPath**: Controls how the file path is displayed.
   - `"full"` (default): Displays the full path relative to the project root (e.g. `[src/server/file.ts]`).
-  - `"short"` (NOT IMPLEMENTED): Displays only the parent directory and file name (e.g. `[server/file.ts]`).
+  - `"short"`: Displays only the parent directory and file name (e.g. `[server/file.ts]`).
   - `"off"`: Displays only the file name (e.g. `[file.ts]`).
 
 - **showLine**: Includes the line number in the output.
